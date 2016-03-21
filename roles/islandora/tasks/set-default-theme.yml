@@ -1,0 +1,5 @@
+---
+- name: Set Default Theme
+  command: >
+    drush vset theme_default {{ drupal_default_theme | default('bootstrap') }}
+    chdir={{ drupal_home }}

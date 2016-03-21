@@ -1,0 +1,10 @@
+*~
+.#*
+cache.properties
+.DS_Store
+.vagrant
+secrets.yml
+downloads
+vagrant/*
+vagrant/!example*
+vagrant/!generate-default-configuration

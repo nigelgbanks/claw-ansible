@@ -1,0 +1,10 @@
+---
+- name: Download CLAW Repository
+  git: >-
+    repo=http://github.com/islandora-claw/CLAW.git
+    dest={{ claw_directory }} 
+
+- name: Set Permissions on CLAW Directory
+  file: >-
+    path={{ claw_directory }} recurse=yes state=directory
+    owner={{ ansible_user | default(lookup('env', 'USER'), true) }} group={{ ansible_user | default(lookup('env', 'USER'), true) }}

@@ -1,0 +1,71 @@
+---
+# Install Solr into Tomcat
+ 
+- name: Download Solr
+  get_url: >-
+    url=http://mirror.catn.com/pub/apache/lucene/solr/{{ solr_version }}/solr-{{ solr_version }}.tgz
+    dest={{ download_directory }}/solr-{{ solr_version }}.tgz
+
+- name: Create Solr Home
+  file: >-
+    path={{ solr_home }} state=directory
+    owner={{ tomcat_user }} group={{ tomcat_group }}
+
+- name: Unarchive Solr
+  unarchive: >-
+    src={{ download_directory }}/solr-{{ solr_version }}.tgz dest={{ download_directory }}
+    creates={{ download_directory }}/solr-{{ solr_version }}
+    owner={{ tomcat_user }} group={{ tomcat_group }} copy=no
+    
+  # Shouldn't this log be in the /var/log/tomcat7 directory?
+  # @todo move fixes for fedora velocity to here.
+- name: Create Velocity Log
+  file: >
+    state=touch path={{ catalina_base }}/velocity.log
+    owner={{ tomcat_user }} group={{ tomcat_group }}
+
+- name: Deploy required jars (Solr)
+  command: >-
+    cp {{ download_directory }}/solr-{{ solr_version }}/example/lib/ext/{{ item }}
+       {{ catalina_home }}/lib/{{ item }}
+    creates={{ catalina_home }}/lib/{{ item }}
+  with_items: "{{ solr_ext_libraries }}"
+    
+- name: Deploy Solr Config
+  shell: >
+    cp -a {{ download_directory }}/solr-{{ solr_version }}/example/solr/* {{ solr_home }}/
+
+- name: Download Drupal Solr Config
+  get_url: >-
+    url=https://ftp.drupal.org/files/projects/apachesolr-{{ drupal_apachesolr_module_version }}.tar.gz
+    dest={{ download_directory}}/apachesolr-{{ drupal_apachesolr_module_version }}.tar.gz
+    
+- name: Unarchive Drupal Solr Config
+  unarchive: >-
+    src={{ download_directory }}/apachesolr-{{ drupal_apachesolr_module_version }}.tar.gz
+    dest=/tmp
+    creates=/tmp/apachesolr
+    copy=no
+
+- name: Deploy Drupal Solr Config
+  shell: >
+     cp -a /tmp/apachesolr/solr-conf/solr-4.x/* {{ solr_home }}/collection1/conf
+     
+- name: Deploy solr.war
+  command: >-
+    cp {{ download_directory }}/solr-{{ solr_version }}/dist/solr-{{ solr_version }}.war {{ catalina_base }}/webapps/solr.war
+    creates={{ catalina_base }}/webapps/solr.war
+    
+- name: Fix SOLR_HOME Ownership and Permissions
+  file: >-
+    path={{ solr_home }}
+    owner={{ tomcat_user }} group={{ tomcat_group }}
+    recurse=yes
+ 
+- name: Fix Tomcat Ownership and Permissions
+  file: >-
+    path={{ catalina_base }}/webapps
+    owner={{ tomcat_user }} group={{ tomcat_group }}
+    recurse=yes
+
+- meta: flush_handlers

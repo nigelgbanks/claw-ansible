@@ -1,0 +1,18 @@
+---
+dependencies:
+  - role: claw
+  - role: drupal
+  - role: drupal-apachesolr-module
+  - role: drupal-module
+    modules:
+      - httprl
+      - services
+      - field_permissions
+      - field_readonly
+      - views
+      - rdfx
+      - entity
+      - uuid
+      - xml_field
+      - jquery_update
+      - hook_post_action

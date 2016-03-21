@@ -1,0 +1,10 @@
+---
+- name: Define pear_install_directory 
+  set_fact:
+    pear_install_directory: "{{ __pear_install_directory }}"
+  when: pear_install_directory is not defined
+  
+- name: Define php_required_packages
+  set_fact:
+    php_required_packages: "{{ __php_required_packages | list }}"
+  when: php_required_packages is not defined

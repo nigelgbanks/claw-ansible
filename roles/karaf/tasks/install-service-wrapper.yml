@@ -1,0 +1,36 @@
+---
+- name: Check if Service Wrapper is Installed
+  stat: path={{ karaf_home }}/bin/karaf-service
+  register: karaf_service_wrapper
+
+- block:
+
+    - name: Start Karaf
+      shell: "{{ karaf_home }}/bin/start && sleep 60"
+
+    - name: Wait for Karaf to be ready.
+      shell: "{{ karaf_home }}/bin/status"
+      register: result
+      until: result.rc == 0
+      retries: 10
+      delay: 5
+      changed_when: false
+      
+    - name: Install Karaf Wrapper
+      shell: "{{ karaf_client }} feature:install wrapper && sleep 10"
+
+    - name: Install Karaf OS Service
+      shell: "{{ karaf_client }} wrapper:install && sleep 10"
+
+    - name: Manually Stop Karaf Service
+      shell: "{{ karaf_home }}/bin/stop && sleep 30"
+
+    - name: Delete Karaf Data Directory
+      file: state=absent path={{ karaf_home }}/data
+
+  environment:
+    JAVA_HOME: "{{ java_home }}"
+  rescue:
+    - file: path={{ karaf_home }}/etc/karaf-wrapper.conf state=absent
+    - shell: "{{ karaf_home }}/bin/stop && sleep 30"
+  when: karaf_service_wrapper.stat.exists == False

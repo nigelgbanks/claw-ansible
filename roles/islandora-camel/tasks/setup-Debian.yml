@@ -1,0 +1,12 @@
+---
+- name: Install Islandora Commands
+  composer: >-
+    command=install
+    working_dir={{ islandora_camel_home }}/commands
+
+- name: Maven Install Islandora Camel
+  command: mvn install -DskipTests chdir={{ islandora_camel_home }}
+  async: 300
+  poll: 5
+  become: yes
+  become_user: "{{ ansible_user | default(lookup('env', 'USER'), true) }}"

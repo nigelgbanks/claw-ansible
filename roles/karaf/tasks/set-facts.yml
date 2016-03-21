@@ -1,0 +1,5 @@
+---
+- name: Define karaf_service
+  set_fact:
+    karaf_service: "{{ __karaf_service }}"
+  when: karaf_service is not defined

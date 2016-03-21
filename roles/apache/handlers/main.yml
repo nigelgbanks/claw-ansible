@@ -1,0 +1,4 @@
+---
+# We never start/restart apache in Docker, we just destroy the container.
+- name: restart apache
+  service: name={{ apache_service }} state=restarted

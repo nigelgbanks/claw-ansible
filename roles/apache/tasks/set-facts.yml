@@ -1,0 +1,25 @@
+---
+- name: Define apache_document_root 
+  set_fact:
+    apache_document_root: "{{ __apache_document_root }}"
+  when: apache_document_root is not defined
+  
+- name: Define apache_service
+  set_fact:
+    apache_service: "{{ __apache_service }}"
+  when: apache_service is not defined
+
+- name: Define apache_user
+  set_fact:
+    apache_user: "{{ __apache_user }}"
+  when: apache_user is not defined
+  
+- name: Define apache_group
+  set_fact:
+    apache_group: "{{ __apache_group }}"
+  when: apache_group is not defined
+
+- name: Define apache_required_packages
+  set_fact:
+    apache_required_packages: "{{ __apache_required_packages | default([]) | list }}"
+  when: apache_required_packages is not defined

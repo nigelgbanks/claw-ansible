@@ -1,0 +1,34 @@
+---
+# Install Drush
+
+- name: Drush Gather OS Specific Variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+   
+- name: Set Facts based on Enviroment
+  include: set-facts.yml
+
+- name: Setup Drush
+  include: "{{ item }}"
+  with_first_found:
+    - "setup-{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
+    - "setup-{{ ansible_distribution }}.yml"
+    - "setup-{{ ansible_os_family }}.yml"
+ 
+- name: Download Drush
+  git: >-
+    repo=https://github.com/drush-ops/drush.git
+    dest=/usr/local/src/drush
+    version={{ drush_version }}
+
+- name: Install Drush Dependancies
+  composer: >-
+    command="install" working_dir=/usr/local/src/drush
+    
+- name: Link Drush to $PATH
+  file: >-
+    src=/usr/local/src/drush/drush dest=/usr/local/bin/drush
+    state=link group=root owner=root

@@ -1,0 +1,9 @@
+---
+__pear_install_directory: /usr/share/php/PHP
+__php_required_packages:
+  - php5
+  - php5-gd
+  - php5-mysql
+  - php-pear
+  - php5-stomp
+  - php5-curl

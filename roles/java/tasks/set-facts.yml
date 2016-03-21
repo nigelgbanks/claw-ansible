@@ -1,0 +1,10 @@
+---
+- name: Define java_home
+  set_fact:
+    java_home: "{{ __java_home }}"
+  when: java_home is not defined
+
+- name: Define java_required_packages
+  set_fact:
+    java_required_packages: "{{ __java_required_packages | list }}"
+  when: java_required_packages is not defined

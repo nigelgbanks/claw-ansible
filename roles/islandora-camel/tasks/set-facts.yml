@@ -1,0 +1,5 @@
+---
+- name: Define islandora_camel_home 
+  set_fact:
+    islandora_camel_home: "{{ __islandora_camel_home }}"
+  when: islandora_camel_home is not defined

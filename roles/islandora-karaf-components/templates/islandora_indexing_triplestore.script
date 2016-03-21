@@ -1,0 +1,2 @@
+repo-add file:{{ islandora_camel_home }}/karaf/target/classes/features.xml
+feature:install islandora-indexing-triplestore

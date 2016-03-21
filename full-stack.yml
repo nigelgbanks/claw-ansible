@@ -1,0 +1,26 @@
+---
+# Setups up full stack on a single server.
+#
+# This playbook assumes Ubuntu 14.04 in a vagrant environment.
+- hosts: all
+  become: yes
+  vars:
+    drupal_webserver: apache
+    drupal_database: mysql
+    mysql_bind_address: localhost
+    mysql_port: 3306
+    mysql_root_password_update: yes
+  vars_files:
+    - secrets.yml
+  roles:
+    - common
+    - dev-tools
+    - geerlingguy.mysql
+    - blazegraph
+    - fedora
+    - solr
+    - coder
+    - drupal-site
+    - islandora
+    - islandora-karaf-components
+    - { role: drupal-module, modules: [ devel, bootstrap ] }

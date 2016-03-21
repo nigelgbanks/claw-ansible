@@ -1,0 +1,5 @@
+---
+- name: Define drush_required_packages
+  set_fact:
+    drush_required_packages: "{{ __drush_required_packages | default([]) | list }}"
+  when: drush_required_packages is not defined

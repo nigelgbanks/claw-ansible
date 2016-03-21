@@ -1,0 +1,4 @@
+---
+- name: Install PHP Required Packages
+  apt: name={{ item }} state=present
+  with_items: "{{ php_required_packages }}"

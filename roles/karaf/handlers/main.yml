@@ -1,0 +1,4 @@
+---
+- name: restart karaf
+  service: name="{{ karaf_service }}" state=restarted sleep=60
+  when: karaf_service is defined 

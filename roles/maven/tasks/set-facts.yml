@@ -1,0 +1,15 @@
+---
+- name: Define m2_home
+  set_fact:
+    m2_home: "{{ __m2_home }}"
+  when: m2_home is not defined
+
+- name: Define maven_repository
+  set_fact:
+    maven_repository: "{{ __maven_repository }}"
+  when: maven_repository is not defined
+
+- name: Define maven_required_packages
+  set_fact:
+    maven_required_packages: "{{ __maven_required_packages | list }}"
+  when: maven_required_packages is not defined

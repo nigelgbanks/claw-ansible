@@ -1,0 +1,5 @@
+---
+__java_home: /usr/lib/jvm/java-8-oracle
+__java_required_packages:
+  - oracle-java8-installer
+  - oracle-java8-set-default

@@ -1,0 +1,16 @@
+---
+- name: Download Commons Logging
+  get_url: >-
+    url=http://repo1.maven.org/maven2/commons-logging/commons-logging/{{ commons_loggin_version }}/commons-logging-{{ commons_loggin_version }}.jar
+    dest={{ download_directory }}/commons-logging-{{ commons_loggin_version }}.jar
+    
+- name: Deploy Commons Logging
+  command: >-
+    cp {{ download_directory }}/commons-logging-{{ commons_loggin_version }}.jar
+       {{ catalina_home }}/lib/commons-logging-{{ commons_loggin_version }}.jar
+    creates={{ catalina_home }}/lib/commons-logging-{{ commons_loggin_version }}.jar
+
+- name: Set Owner and Group for commons-logging.jar
+  file: >
+    path={{ catalina_home }}/lib/commons-logging-{{ commons_loggin_version }}.jar
+    owner={{ tomcat_user }} group={{ tomcat_group }}

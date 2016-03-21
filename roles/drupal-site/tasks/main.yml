@@ -1,0 +1,56 @@
+---
+# Installs a Drupal subsite from the given parameters.
+
+- name: Create Drupal Site Database
+  mysql_db: >-
+    db={{ drupal_site_db_name }} state=present
+    login_host={{ drupal_database_url }} login_port={{ drupal_database_port | int }}
+    login_user={{ drupal_database_root_user }}
+    login_password={{ drupal_database_root_password }}
+
+- name: Create the Drupal Site Database User
+  mysql_user: >-
+    name={{ drupal_site_db_user }} password={{ drupal_site_db_password }}
+    host="%" priv="{{ drupal_site_db_name }}.*:ALL"
+    login_host={{ drupal_database_url }} login_port={{ drupal_database_port | int }}
+    login_user={{ drupal_database_root_user }}
+    login_password={{ drupal_database_root_password }}
+
+- name: Install Drupal Site
+  command: >
+    drush si -y
+          --sites-subdir={{ drupal_site_directory }}
+          --site-name="{{ drupal_site_name }}"
+          --site-mail="{{ drupal_site_email }}"
+          --locale={{ drupal_site_locale }}
+          --account-name="{{ drupal_site_account_name }}"
+          --account-pass="{{ drupal_site_account_password }}"
+          --account-mail="{{ drupal_site_account_email }}"
+          --db-url="mysql://{{ drupal_site_db_user }}:{{ drupal_site_db_password }}@{{ drupal_database_url }}:{{ drupal_database_port }}/{{ drupal_site_db_name }}"
+          --db-su="{{ drupal_database_root_user }}" --db-su-pw="{{ drupal_database_root_password }}"
+    chdir={{ drupal_home }}
+    creates={{ drupal_home }}/sites/{{ drupal_site_directory }}/settings.php
+
+- name: Set Permissions on Drupal Site directory
+  file: >-
+    path={{ drupal_home }}/sites/{{ drupal_site_directory }} state=directory
+    owner={{ drupal_webserver_user }} group={{ drupal_webserver_group }}
+
+- name: Create Drupal Site Library and Module Folders
+  file: >-
+    path={{ drupal_home }}/sites/{{ drupal_site_directory }}/{{ item }} state=directory
+    owner={{ drupal_webserver_user }} group={{ drupal_webserver_group }} mode=ug+rw
+  with_items:
+    - libraries
+    - modules
+    - modules/contrib
+    - modules/custom
+    - modules/features
+
+- name: Setup Vhost for Drupal Site
+  include: "{{ item }}"
+  with_first_found:
+    - "config-vhost-{{ drupal_webserver }}-{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
+    - "config-vhost-{{ drupal_webserver }}-{{ ansible_distribution }}.yml"
+    - "config-vhost-{{ drupal_webserver }}-{{ ansible_os_family }}.yml"
+    - "config-vhost-{{ drupal_webserver }}.yml"

@@ -1,0 +1,7 @@
+---
+__common_required_packages:
+  - software-properties-common
+  - python-software-properties
+  - wget
+  - curl
+  - git

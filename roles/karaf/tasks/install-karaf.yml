@@ -1,0 +1,21 @@
+---
+- stat: path={{ karaf_home }}
+  register: karaf_install
+
+- block:
+
+    - name: Download Karaf
+      get_url: >-
+        url=http://mirror.csclub.uwaterloo.ca/apache/karaf/{{ karaf_version }}/apache-karaf-{{ karaf_version }}.tar.gz
+        dest={{ download_directory }}/apache-karaf-{{ karaf_version }}.tar.gz
+    
+    - name: Extract Karaf
+      unarchive: >-
+        src={{ download_directory }}/apache-karaf-{{ karaf_version }}.tar.gz
+        dest={{ download_directory }} copy=no
+    
+    - name: Copy Karaf to Install location
+      command: >-
+        cp -r {{ download_directory }}/apache-karaf-{{ karaf_version }} {{ karaf_home }}
+
+  when: karaf_install.stat.exists == False

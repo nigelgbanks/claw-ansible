@@ -1,0 +1,5 @@
+---
+- name: Define common_required_packages
+  set_fact:
+    common_required_packages: "{{ __common_required_packages | list }}"
+  when: common_required_packages is not defined

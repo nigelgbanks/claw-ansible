@@ -1,0 +1,8 @@
+---
+solr_home: "{{ catalina_base }}/solr"
+solr_version: 4.10.4
+solr_ext_libraries:
+  - log4j-1.2.17.jar
+  - slf4j-api-1.7.6.jar
+  - slf4j-log4j12-1.7.6.jar
+drupal_apachesolr_module_version: 7.x-1.8

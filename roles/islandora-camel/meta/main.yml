@@ -1,0 +1,5 @@
+---
+dependencies:
+  - claw
+  - maven
+  - composer

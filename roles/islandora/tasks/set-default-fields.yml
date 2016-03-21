@@ -1,0 +1,11 @@
+---
+- name: Deploy add_default_fields.php
+  copy: src=files/add_default_fields.php dest=/tmp/add_default_fields.php
+  
+# We never fail on this since we can detect that it completed before and
+# it will fail on subsequent runs.
+- name: Run add_default_fields.php
+  command: >-
+    drush scr /tmp/add_default_fields.php
+    chdir={{ drupal_home }}
+    failed_when=false

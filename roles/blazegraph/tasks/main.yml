@@ -1,0 +1,20 @@
+---
+# Install Blazegraph
+
+- name: Download Blazegraph
+  get_url: >-
+    url=http://sourceforge.net/projects/bigdata/files/bigdata/{{ blazegraph_version }}/bigdata.war/download
+    dest={{ download_directory }}/bigdata-{{ blazegraph_version }}.war
+        
+- name: Deploy Blazegraph
+  command: >-
+    cp {{ download_directory }}/bigdata-{{ blazegraph_version }}.war
+       {{ catalina_base }}/webapps/bigdata.war
+    creates={{ catalina_base }}/webapps/bigdata.war
+  notify: restart tomcat
+
+- name: Fix Blazegraph Ownership and Permissions
+  file: >-
+    path={{ catalina_base }}/webapps
+    owner={{ tomcat_user }} group={{ tomcat_group }}
+    recurse=yes

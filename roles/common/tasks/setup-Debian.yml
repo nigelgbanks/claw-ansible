@@ -1,0 +1,7 @@
+---
+- name: Upgrade OS
+  apt: upgrade=yes update_cache=yes cache_valid_time=3600
+
+- name: Install Common Software Packages
+  apt: name={{ item }} state=present
+  with_items: "{{ common_required_packages }}"

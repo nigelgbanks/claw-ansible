@@ -1,0 +1,5 @@
+---
+# Must be deployed here by vagrant or the variable overridden from the
+# command line with the location this repository has been deployed to.
+install_directory: /opt/CLAW
+download_directory: /opt/downloads

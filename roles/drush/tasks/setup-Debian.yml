@@ -1,0 +1,4 @@
+---
+- name: Install Drush Required Packages
+  apt: name={{ item }} state=present
+  with_items: "{{ drush_required_packages }}"

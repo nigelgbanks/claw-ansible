@@ -1,0 +1,23 @@
+---
+- name: Install Apache Required Packages
+  apt: name={{ item }} state=present
+  with_items: "{{ apache_required_packages }}"
+
+- name: Start Apache and set it to start at boot
+  service: name={{ apache_service }} state=started enabled=yes
+
+- name: Add User to Apache Group
+  user: user={{ ansible_user | default(lookup('env', 'USER'), true) }} groups={{ apache_group }} append=yes
+
+- name: Enable Apache mod-rewrite
+  apache2_module: name=rewrite state=present
+  notify: restart apache
+
+- name: Set Owner/Group and Perms of Apache Document Root
+  file: >-
+    path=/var/www
+    owner={{ apache_user }} group={{ apache_group }}
+    mode=ug+rw recurse=yes
+
+- name: Wait for Apache to Start
+  wait_for: port=80

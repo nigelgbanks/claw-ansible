@@ -1,0 +1,5 @@
+---
+__m2_home: /usr/share/maven
+__maven_repository: /home/{{ ansible_user | default(lookup('env', 'USER'), true) }}/.m2/repository
+__maven_required_packages:
+  - maven

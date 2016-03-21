@@ -1,0 +1,5 @@
+---
+- name: Update Solr Module Settings 
+  command: >-
+    drush sqlq "update apachesolr_environment set url='{{ solr_url }}' where name='localhost server'"
+    chdir={{ drupal_home }}/sites/{{ drupal_site }}

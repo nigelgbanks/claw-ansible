@@ -1,0 +1,3 @@
+---
+__drush_required_packages:
+  - mysql-client

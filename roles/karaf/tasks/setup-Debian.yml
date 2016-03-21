@@ -1,0 +1,31 @@
+---
+- name: Install Karaf Service
+  include: install-service-wrapper.yml
+
+- name: Add it as a Linux service
+  command: >
+    cp {{ karaf_home }}/bin/karaf-service /etc/init.d/karaf-service
+
+- name: Set Karaf to start on boot
+  service: >-
+    name={{ karaf_service }} enabled=yes
+
+- name: Add Users Maven Repository to Karaf
+  lineinfile: >-
+    dest={{ karaf_home }}/etc/org.ops4j.pax.url.mvn.cfg state=present
+    line="org.ops4j.pax.url.mvn.localRepository={{ maven_repository }}"
+
+- name: Copy modified karaf logging
+  copy: src=org.ops4j.pax.logging.cfg dest={{ karaf_home }}/etc
+
+- name: Start Karaf Service
+  service: >-
+    name=karaf-service state=started sleep=30
+
+- name: Wait for Karaf to be ready.
+  shell: "service karaf-service status"
+  register: result
+  until: result.rc == 0
+  retries: 10
+  delay: 5
+  changed_when: false

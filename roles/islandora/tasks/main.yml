@@ -1,0 +1,46 @@
+---
+# Install Islandora
+
+- name: Install XPath Field
+  git: >-
+    repo=http://github.com/Islandora-Labs/xpath_field.git
+    dest={{ drupal_home }}/sites/{{ drupal_site }}/modules/custom/xpath_field
+
+- name: Install Spyc Library
+  git: >-
+    repo=http://github.com/mustangostang/spyc.git
+    dest={{ drupal_home }}/sites/{{ drupal_site }}/libraries/spyc
+
+- file: >-
+    path={{ drupal_home }}/sites/{{ drupal_site }}/libraries/ARC2 state=directory
+    owner={{ drupal_webserver_user }} group={{ drupal_webserver_group }}
+          
+- name: Download ARC2 Library
+  git: >-
+    repo=http://github.com/semsol/arc2.git
+    dest={{ drupal_home }}/sites/{{ drupal_site }}/libraries/ARC2/arc
+
+- name: Download Islandora Modules to Drupal Install
+  file: >-
+    src={{ claw_directory }}/drupal
+    dest={{ drupal_home }}/sites/{{ drupal_site }}/modules/islandora
+    state=link owner={{ drupal_webserver_user }} group={{ drupal_webserver_group }}
+
+- name: Enable Islandora Modules
+  drupal_module: >-
+    name={{ item }} state=enabled
+    chdir={{ drupal_home }}/sites/{{ drupal_site | default('all') }}
+  with_items:
+    - xpath_field
+    - islandora
+    - islandora_dc
+    - islandora_mods
+    - islandora_basic_image
+    - islandora_collection
+    - islandora_apachesolr
+    - islandora_delete_by_fedora_uri_service
+    - islandora_medium_size_service
+    - islandora_tn_service
+
+- include: set-default-fields.yml
+- include: set-default-theme.yml

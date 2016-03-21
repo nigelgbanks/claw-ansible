@@ -1,0 +1,6 @@
+---
+drupal_webserver_host: localhost
+drupal_webserver_port: 80
+tomcat_host: localhost
+tomcat_port: 8080
+jms_port: 61616

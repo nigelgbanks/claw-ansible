@@ -1,0 +1,27 @@
+---
+# Install and Configure Drupal
+# Drupal can support different webservers (apache, ngnix) and different
+# databases (mysql, postgresql, etc).
+
+- name: Drupal Gather Webserver Specific Variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ drupal_webserver }}-{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
+    - "{{ drupal_webserver }}-{{ ansible_distribution }}.yml"
+    - "{{ drupal_webserver }}-{{ ansible_os_family }}.yml"
+    - "{{ drupal_webserver }}.yml"
+
+- name: Drupal Gather Database Specific Variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ drupal_database }}-{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
+    - "{{ drupal_database }}-{{ ansible_distribution }}.yml"
+    - "{{ drupal_database }}-{{ ansible_os_family }}.yml"
+    - "{{ drupal_database }}.yml"
+
+- name: Setup Drupal
+  include: "{{ item }}"
+  with_first_found:
+    - "setup-{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
+    - "setup-{{ ansible_distribution }}.yml"
+    - "setup-{{ ansible_os_family }}.yml"

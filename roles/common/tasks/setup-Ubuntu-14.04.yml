@@ -1,0 +1,7 @@
+---
+- include: setup-Debian.yml
+
+# https://bugs.launchpad.net/ubuntu/+source/zsh/+bug/1242108
+- name: Apply bug fix for Ubuntu 14.04 with ZSH 5.0.2 
+  script: >-
+    ubuntu-14.04-zsh-5.0.2-bug-fix.sh creates=/usr/share/man/man1/zshcompctl.1.gz

@@ -1,0 +1,35 @@
+---
+- name: Define catalina_home
+  set_fact:
+    catalina_home: "{{ __catalina_home }}"
+  when: catalina_home is not defined
+
+- name: Define catalina_base
+  set_fact:
+    catalina_base: "{{ __catalina_base }}"
+  when: catalina_base is not defined
+
+- name: Define tomcat_user
+  set_fact:
+    tomcat_user: "{{ __tomcat_user }}"
+  when: tomcat_user is not defined
+
+- name: Define tomcat_group
+  set_fact:
+    tomcat_group: "{{ __tomcat_group }}"
+  when: tomcat_group is not defined
+
+- name: Define tomcat_java_opts
+  set_fact:
+    tomcat_java_opts: "{{ __tomcat_java_opts }}"
+  when: tomcat_java_opts is not defined
+
+- name: Define tomcat_service
+  set_fact:
+    tomcat_service: "{{ __tomcat_service }}"
+  when: tomcat_service is not defined and ansible_virtualization_type != "docker"
+
+- name: Define tomcat_required_packages
+  set_fact:
+    tomcat_required_packages: "{{ __tomcat_required_packages | default([]) | list }}"
+  when: tomcat_required_packages is not defined

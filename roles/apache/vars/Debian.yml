@@ -1,0 +1,9 @@
+---
+__apache_document_root: /var/www/html
+__apache_service: apache2
+__apache_user: www-data
+__apache_group: www-data
+__apache_required_packages:
+  - apache2
+  - libapache2-mod-php5
+  - libapache2-mod-auth-mysql

@@ -1,0 +1,4 @@
+---
+- name: restart tomcat
+  service: name={{ tomcat_service }} state=restarted sleep=5
+  when: tomcat_service is defined
