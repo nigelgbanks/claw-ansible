@@ -7,4 +7,3 @@ secrets.yml
 downloads
 vagrant/*
 vagrant/!example*
-vagrant/!generate-default-configuration
