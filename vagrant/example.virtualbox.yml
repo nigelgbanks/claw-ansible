@@ -1,6 +1,6 @@
 ---
 name: Islandora Claw
-box: williamyeh/ubuntu-trusty64-docker
+box: ubuntu/trusty64
 memory: 2048
 cpus: 1
 port_mapping:
