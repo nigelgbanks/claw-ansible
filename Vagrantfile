@@ -8,7 +8,7 @@ require 'yaml'
 def load_settings(file)
   dir = File.dirname(File.expand_path(__FILE__))
   if !File.exist?("#{dir}/vagrant/#{file}.yml")
-    FileUtils.mv("#{dir}/vagrant/#{file}.yml", "#{dir}/vagrant/#{file}.yml")
+    FileUtils.cp("#{dir}/vagrant/example.#{file}.yml", "#{dir}/vagrant/#{file}.yml")
     if !File.exist?("#{dir}/vagrant/#{file}.yml")
       raise "Settings file not found! Please copy vagrant/example.#{file}.yml to vagrant/#{file}.yml and try again."
     end
