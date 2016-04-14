@@ -1,7 +1,7 @@
 ---
 name: Islandora Claw
 box: ubuntu/trusty64
-memory: 2048
+memory: 4096
 cpus: 1
 port_mapping:
   # Apache
