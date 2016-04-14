@@ -44,3 +44,8 @@
 
 - include: set-default-fields.yml
 - include: set-default-theme.yml
+
+- name: Set Drupal Root Perms
+  file: >-
+    path={{ drupal_home }} recurse=yes mode=ug+rw
+    owner={{ drupal_webserver_user }} group={{ drupal_webserver_group }}
