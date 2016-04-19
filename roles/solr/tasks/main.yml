@@ -30,7 +30,14 @@
        {{ catalina_home }}/lib/{{ item }}
     creates={{ catalina_home }}/lib/{{ item }}
   with_items: "{{ solr_ext_libraries }}"
-    
+
+- name: Set Perms on required jars (Solr)
+  file: >-
+    path={{ catalina_home }}/lib/{{ item }} mode=0774
+    owner={{ tomcat_user }} group={{ tomcat_group }}
+  with_items: "{{ solr_ext_libraries }}"
+  notify: restart tomcat
+
 - name: Deploy Solr Config
   shell: >
     cp -a {{ download_directory }}/solr-{{ solr_version }}/example/solr/* {{ solr_home }}/
