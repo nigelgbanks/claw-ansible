@@ -6,7 +6,7 @@
 
     - name: Download Karaf
       get_url: >-
-        url=http://mirror.csclub.uwaterloo.ca/apache/karaf/{{ karaf_version }}/apache-karaf-{{ karaf_version }}.tar.gz
+        url=http://archive.apache.org/dist/karaf/{{ karaf_version }}/apache-karaf-{{ karaf_version }}.tar.gz
         dest={{ download_directory }}/apache-karaf-{{ karaf_version }}.tar.gz
     
     - name: Extract Karaf
