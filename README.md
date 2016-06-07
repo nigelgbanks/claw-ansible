@@ -1,5 +1,8 @@
 # Islandora CLAW: Ansible
 
+[![Contribution Guidelines](http://img.shields.io/badge/CONTRIBUTING-Guidelines-blue.svg)](./CONTRIBUTING.md)
+[![LICENSE](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](./LICENSE)
+
 ## Introduction
 
 The is a development environment for the Islandora and Fedora 4 project (CLAW).
