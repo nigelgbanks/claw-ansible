@@ -8,7 +8,7 @@
 
 - name: Download Fedora
   get_url: >-
-    url=https://github.com/fcrepo4/fcrepo4/releases/download/fcrepo-{{ fedora_version }}/fcrepo-webapp-{{ fedora_version }}.war
+    url=https://github.com/fcrepo4-exts/fcrepo-webapp-plus/releases/download/fcrepo-webapp-plus-{{ fedora_version }}/fcrepo-webapp-plus-{{ fedora_version }}.war
     dest={{ download_directory }}/fcrepo-webapp-{{ fedora_version }}.war
 
 - name: Create Fedora Data Directory
