@@ -1,5 +1,5 @@
 #!/bin/bash
 apt-get update
 apt-get -y install python python-dev python-pip python-crypto python-httplib2 \
-        libyaml-dev aptitude
+        libffi-dev libssl-dev libyaml-dev aptitude
 pip install ansible
