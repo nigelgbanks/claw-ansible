@@ -3,7 +3,7 @@
  
 - name: Download Solr
   get_url: >-
-    url=http://mirror.catn.com/pub/apache/lucene/solr/{{ solr_version }}/solr-{{ solr_version }}.tgz
+    url=http://archive.apache.org/dist/lucene/solr/{{ solr_version }}/solr-{{ solr_version}}.tgz
     dest={{ download_directory }}/solr-{{ solr_version }}.tgz
 
 - name: Create Solr Home
