@@ -18,13 +18,11 @@
   delay: 5
   changed_when: false
 
-- name: Deploy Compontents
+- name: Deploy Components
   template: >-
     src={{ item }} dest={{ download_directory }}/{{ item }}
   with_items:
     - islandora_sync_gateway.script
-    - islandora_basic_image.script
-    - islandora_collection.script
     - islandora_indexing_triplestore.script
     - watch.script
 
@@ -37,10 +35,6 @@
   with_items:
     - script: islandora_sync_gateway.script
       creates: ca.islandora.camel.sync.cfg
-    - script: islandora_basic_image.script
-      creates: ca.islandora.services.basic.image.cfg
-    - script: islandora_collection.script
-      creates: ca.islandora.services.collection.cfg
     - script: islandora_indexing_triplestore.script
       creates: ca.islandora.camel.indexing.triplestore.cfg
 
@@ -49,9 +43,7 @@
   template: >
     src={{ item }} dest={{ karaf_home }}/etc
   with_items:
-    - ca.islandora.services.basic.image.cfg
     - ca.islandora.camel.sync.cfg
-    - ca.islandora.services.collection.cfg
     - ca.islandora.sync.cfg
     - org.fcrepo.camel.indexing.triplestore.cfg
     - ca.islandora.camel.indexing.triplestore.cfg

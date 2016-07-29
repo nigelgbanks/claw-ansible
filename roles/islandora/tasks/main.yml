@@ -22,7 +22,7 @@
 
 - name: Download Islandora Modules to Drupal Install
   file: >-
-    src={{ claw_directory }}/drupal
+    src={{ claw_directory }}/islandora
     dest={{ drupal_home }}/sites/{{ drupal_site }}/modules/islandora
     state=link owner={{ drupal_webserver_user }} group={{ drupal_webserver_group }}
 

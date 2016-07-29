@@ -1,2 +1,2 @@
 ---
-__islandora_camel_home: "{{ claw_directory }}/camel"
+__islandora_camel_home: "{{ claw_directory }}/Alpaca"
